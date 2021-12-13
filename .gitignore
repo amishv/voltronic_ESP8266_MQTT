@@ -14,3 +14,4 @@ include/passwd.h
 include/README
 lib/README
 src/main.ino
+include/passwd.h
