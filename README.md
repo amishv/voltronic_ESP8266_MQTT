@@ -1,7 +1,7 @@
 # voltronic_ESP8266_MQTT
 Home Assistant addon using MQTT to get data from Voltronic Solar Inverters using ESP8266
 
-This project is intended to interface with the Voltronics 'InfiniSolar V' Solar inverters https://voltronicpower.com/en-US/Product/Detail/InfiniSolar-V-1K-5K, slod in India by Flin Energy https://flinenergy.com/solar_inverters/_FlinInfini_Lite_Smart_Hybrid_Inverter.
+This project is intended to interface with the Voltronics 'InfiniSolar V' Solar inverters https://voltronicpower.com/en-US/Product/Detail/InfiniSolar-V-1K-5K, sold in India by Flin Energy https://flinenergy.com/solar_inverters/_FlinInfini_Lite_Smart_Hybrid_Inverter.
 
 This inverter follows protocol version 1.8 that starts with ^ (^P005PI) unlike previous starting with Q (QPI).
 ___________________________________________________________________________________________
