@@ -1,3 +1,8 @@
+// Copyright (c) 2022 amish
+// 
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+
 #include <stdio.h>
 #include <ESP8266WiFiMulti.h>
 #include <ESP8266mDNS.h>
@@ -18,13 +23,13 @@ const char *ssid2 = SSID2;
 const char *password2 = WiFi_KEY2;
 const uint32_t connectTimeoutMs = 5000;
 const char *hostname = CLIENTID;
-const char *api_passwd = API_PASS ;
-const char mqtt_hostname[] = MQTT_HOST; //replace this with IP address of machine
+const char *api_passwd = API_PASS;
+const char mqtt_hostname[] = MQTT_HOST; // replace this with IP address of machine
 const uint8_t startingDebugLevel = debugPort.ANY;
 void communication_SetRemoteDebug(RemoteDebug *Debug);
-//HardwareSerial   debugPort = Serial;
-//HardwareSerial   InverterPort = Serial1;
-//PubSub call back crashes on calling external/library functions
+// HardwareSerial   debugPort = Serial;
+// HardwareSerial   InverterPort = Serial1;
+// PubSub call back crashes on calling external/library functions
 static char mqttCmdBuf[SIZE_OF_REPLY]; // avoiding dynamic allocation in the ESP processor
 static char mqttRecBuf[SIZE_OF_REPLY]; // avoiding malloc/calloc in the ESP processor
 static int isMqttCmd = false;
@@ -64,8 +69,7 @@ void setupOTA()
                        }
 
                        // NOTE: if updating FS this would be the place to unmount FS using FS.end()
-                       debugPort.println("Start updating " + type);
-                     });
+                       debugPort.println("Start updating " + type); });
   ArduinoOTA.onEnd([]()
                    { debugPort.println("\nEnd"); });
   ArduinoOTA.onProgress([](unsigned int progress, unsigned int total)
@@ -92,14 +96,13 @@ void setupOTA()
                        else if (error == OTA_END_ERROR)
                        {
                          debugPort.println("End Failed");
-                       }
-                     });
+                       } });
   ArduinoOTA.begin();
 }
 
 void setup()
 {
-  //debugPort.begin(9600); // For Logger, enable if using serial logging
+  // debugPort.begin(9600); // For Logger, enable if using serial logging
   debugPort.println("Booting");
   InverterPort.begin(2400); // for Inverter
   // Register multi WiFi networks
@@ -107,7 +110,7 @@ void setup()
   wifiMulti.addAP(ssid2, password2);
   client.setClient(wifiClient);
   WiFi.mode(WIFI_STA);
- // WiFi.begin(ssid, password);
+  // WiFi.begin(ssid, password);
   while (wifiMulti.run(connectTimeoutMs) != WL_CONNECTED)
   {
     debugPort.println("Connection Failed! Rebooting...");
@@ -117,15 +120,15 @@ void setup()
   setupOTA();
   // Hostname defaults to esp8266-[ChipID]
   WiFi.setHostname(hostname);
-  //starting over wifi
+  // starting over wifi
   debugPort.begin(hostname, startingDebugLevel);
 
   debugPort.println("Ready");
   debugPort.print(hostname);
   debugPort.print("IP address: ");
   debugPort.println(WiFi.localIP());
-  //implement rest of the code
-  client.setServer(mqtt_hostname, 1883); //default port for mqtt is 1883
+  // implement rest of the code
+  client.setServer(mqtt_hostname, 1883); // default port for mqtt is 1883
   client.setBufferSize(500);             // for large mqtt messages
   client.setCallback(callback);
   while (!client.connected())
@@ -141,7 +144,7 @@ void setup()
 
       debugPort.print("failed with state ");
       debugPort.print(client.state());
-      delay(10000); //wait for watchdog reset
+      delay(10000); // wait for watchdog reset
     }
   }
   client.publish("homeassistant/test", "Hello from ESP8266");
@@ -153,7 +156,7 @@ void setup()
   sensorInit(1);
 }
 
-//this function reconnect wifi as well as broker if connection gets disconnected.
+// this function reconnect wifi as well as broker if connection gets disconnected.
 void reconnect()
 {
   int status;
@@ -207,7 +210,7 @@ void loop()
         debugPort.println(status);
         debugPort.println(mqttRecBuf);
       }
-      else if (status == -2) //command refused
+      else if (status == -2) // command refused
       {
         debugPort.println(mqttRecBuf);
         debugPort.println("Message to be published to MQTT");
@@ -227,14 +230,14 @@ void loop()
     client.publish(MQTT_RAW_REPLY_TOPIC, mqttRecBuf);
     isMqttCmd = false;
     memset(mqttCmdBuf, 0, SIZE_OF_REPLY);
-  } //no other commands if raw cammand is present
+  } // no other commands if raw cammand is present
   else if ((time_now - time_prev) > 15000l)
   {
     time_prev = time_now;
     if (polling)
     {
       generalStatusDisplay();
-      sprintf(mqttCmdBuf, "%d",WiFi.RSSI()); //reuse mqtt buffer as it will ne empty in single thread
+      sprintf(mqttCmdBuf, "%d", WiFi.RSSI()); // reuse mqtt buffer as it will ne empty in single thread
       sendMQTTmessage("wifi_strength", mqttCmdBuf);
     }
     else
@@ -246,7 +249,7 @@ void loop()
     time_count++;
     if (time_count % 20 == 0)
     {
-      ; //sensorInit(1); //configure sensors every 5 min
+      ; // sensorInit(1); //configure sensors every 5 min
     }
     debugPort.printf("in the debug loop -Amish\n");
   }
