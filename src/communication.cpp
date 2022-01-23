@@ -187,14 +187,14 @@ int registerTopic(const char *topic_str, const char *unit_name, const char *icon
   sprintf(topic, "%s/voltronic_%s/config",HA_SENSOR_TOPIC, topic_str);
   if (isStop == 1)
     sprintf(message, "{ \n\
-                        \"name\": \"%s/%s\",\n\
+                        \"name\": \"voltronic_%s\",\n\
                         \"unit_of_measurement\": \"%s\",\n\
                         \"unique_id\": \"%s\",\n\
-                        \"state_topic\": \"%s/state\",\n\
+                        \"state_topic\": \"%s/%s/state\",\n\
                         \"icon\": \"mdi:%s\",\n\
-                        \"retain: false\n\
+                        \"retain\": false\n\
                       }\n",
-            HA_SENSOR_TOPIC,topic_str, unit_name, topic_str, topic_str,icon_name);
+            topic_str, unit_name, topic_str, HA_SENSOR_TOPIC, topic_str,icon_name);
   else
     sprintf(message, " ");
   //commDebug->printf("topic: %s\n", topic);

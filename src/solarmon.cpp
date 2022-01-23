@@ -147,7 +147,7 @@ void setup()
       delay(10000); // wait for watchdog reset
     }
   }
-  client.publish("homeassistant/test", "Hello from ESP8266");
+  client.publish("homeassistant/test", "Hello from ESP-solarmon");
   if (client.subscribe(MQTT_RAW_CMD_TOPIC, 0))
     debugPort.println("Subscribed to topic");
   // required to enable WIFI remotedebug in communication.h
@@ -249,7 +249,7 @@ void loop()
     time_count++;
     if (time_count % 20 == 0)
     {
-      ; // sensorInit(1); //configure sensors every 5 min
+      sensorInit(1); //configure sensors every 5 min
     }
     debugPort.printf("in the debug loop -Amish\n");
   }
