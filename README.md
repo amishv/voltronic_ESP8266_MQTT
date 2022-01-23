@@ -25,4 +25,5 @@ XXXXX           Data                If the data is reserved, they will be filled
                 8 bits.
 ___________________________________________________________________________________________
 
+Before compiling be sure to change the SSID, password, aqnd MQTT server IP in include/passwd.h 
 The binaries can be built by importing the project in PlatformIO editor or Arduino.
