@@ -12,11 +12,6 @@
 #include "solarmon.h"
 
 
-static const char *BatteryType[] = {
-    "AGM",
-    "Flooded",
-    "User"
-};
 static const char *ChargeSource[] = {
     "Solar first",
     "Solar & Utility",
@@ -26,6 +21,12 @@ static const char *OutputPriority[] = {
     "S-U-B", //Solar-Utility-Battery",
     "S-B-U"  //Solar-Battery-Utility"
 };
+#if 0  //for future use
+static const char *BatteryType[] = {
+    "AGM",
+    "Flooded",
+    "User"
+};
 static const char *OutputSetting[] = {
     "  Single",
     "Parallel",
@@ -33,7 +34,7 @@ static const char *OutputSetting[] = {
     " Phase 2",
     " Phase 3"
 };
-
+#endif //for future use
 int ratedInformation(void)
 {
   int value_AC_input_rating_voltage_, value_AC_input_rating_current_, value_AC_output_rating_voltage_,
